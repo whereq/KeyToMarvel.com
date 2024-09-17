@@ -1,0 +1,5 @@
+FROM quay.io/keycloak/keycloak:latest
+
+COPY target/keycloak-whereq.jar /opt/keycloak/providers/
+
+CMD ["start-dev", "--hostname-strict=false"]

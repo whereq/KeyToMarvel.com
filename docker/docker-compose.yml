@@ -1,0 +1,31 @@
+networks:
+  database:
+    external: true
+
+services:
+  keycloak:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      environment:
+        KEYCLOAK_ADMIN: admin
+        KEYCLOAK_ADMIN_PASSWORD: admin
+        KC_HTTP_ENABLED: true
+        KC_HTTP_PORT: 8080
+        KC_HOSTNAME_STRICT: false
+        KC_HOSTNAME_STRICT_HTTPS: false
+#        KC_LOG_LEVEL: DEBUG
+#        KEYCLOAK_LOG_LEVEL: DEBUG
+        DEBUG: 'true'
+        DEBUG_SUSPEND: 'y'
+        DEBUG_PORT: '*:5005'
+      volumes:
+        - ./volumes/keycloak/conf:/opt/keycloak/conf
+        - ./volumes/keycloak/providers:/opt/keycloak/providers
+      ports:
+        - 80:8080
+        - 5005:5005
+      command:
+        - start-dev
+      networks:
+        - database

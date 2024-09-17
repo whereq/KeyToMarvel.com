@@ -1,0 +1,23 @@
+networks:
+  database:
+    external: true
+
+services:
+  whereq-mysql:
+    image: mysql:8.0.32
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d
+      - /c/Users/googo/docker/volumes/mysql/mysql-files:/var/lib/mysql-files
+      - /c/Users/googo/docker/volumes/mysql/log:/var/log/mysql
+      - /c/Users/googo/docker/volumes/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=whereq
+      - MYSQL_ROOT_PASSWORD=123456
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    networks:
+      - database
+    ports:
+      - 3306:3306
+    command: mysqld --character_set_server=utf8mb4 --explicit_defaults_for_timestamp

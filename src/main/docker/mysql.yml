@@ -1,0 +1,21 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+version: '3.8'
+services:
+  whereq-mysql:
+    image: mysql:8.0.32
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d
+      - /c/Users/googo/docker/volumes/mysql/mysql-files:/var/lib/mysql-files
+      - /c/Users/googo/docker/volumes/mysql/log:/var/log/mysql
+      - /c/Users/googo/docker/volumes/mysql/data:/var/lib/mysql
+    #   - ~/volumes/jhipster/whereq/mysql/:/var/lib/mysql/
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=whereq
+      - MYSQL_ROOT_PASSWORD=123456
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 3306:3306
+    # command: mysqld --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    command: mysqld --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
