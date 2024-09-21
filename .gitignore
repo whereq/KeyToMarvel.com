@@ -97,3 +97,4 @@ fabric.properties
 
 # Docker
 docker/volumes/keycloak/providers/keycloak-whereq.jar
+docker/volumes/keycloak/providers/**

@@ -1,3 +1,6 @@
+## Keycloak extensions
+https://www.keycloak.org/extensions
+
 ## Keycloak authentication sequence diagram 
 
 ```mermaid
