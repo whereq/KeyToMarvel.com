@@ -55,10 +55,10 @@ public class MockedKeycloakSession implements KeycloakSession {
                 return httpRequest.getHttpHeaders();
             }
 
-            @Override
-            public <T> T getContextObject(Class<T> aClass) {
-                return null;
-            }
+//            @Override
+//            public <T> T getContextObject(Class<T> aClass) {
+//                return null;
+//            }
 
             @Override
             public RealmModel getRealm() {
@@ -108,6 +108,21 @@ public class MockedKeycloakSession implements KeycloakSession {
             @Override
             public HttpResponse getHttpResponse() {
                 return null;
+            }
+
+            @Override
+            public void setConnection(ClientConnection clientConnection) {
+
+            }
+
+            @Override
+            public void setHttpRequest(HttpRequest httpRequest) {
+
+            }
+
+            @Override
+            public void setHttpResponse(HttpResponse httpResponse) {
+
             }
         };
     }
@@ -275,5 +290,10 @@ public class MockedKeycloakSession implements KeycloakSession {
     @Override
     public ClientPolicyManager clientPolicy() {
         return null;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
     }
 }
