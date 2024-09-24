@@ -105,11 +105,12 @@
                 <version>3.4.2</version>
                 <executions>
                     <execution>
-                        <id>default-jar</id>
+                        <id>provider-jar</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                         <configuration>
+                            <classifier>providers</classifier>
                             <excludes>
                                 <exclude>themes/**</exclude>
                             </excludes>
@@ -119,50 +120,96 @@
             </plugin>
 
             <!-- Copy themes directory to target -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-themes</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/classes/themes</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>themes</directory>
-                                    <includes>
-                                        <include>**/*</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-resources-plugin</artifactId>-->
+<!--                <version>3.3.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-themes</id>-->
+<!--                        <phase>prepare-package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-resources</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${project.build.directory}/classes/themes</outputDirectory>-->
+<!--                            <resources>-->
+<!--                                <resource>-->
+<!--                                    <directory>themes/key-to-marvel</directory>-->
+<!--                                    <includes>-->
+<!--                                        <include>**/*</include>-->
+<!--                                    </includes>-->
+<!--                                </resource>-->
+<!--                            </resources>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
 
             <!-- Themes JAR -->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <version>3.4.2</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>themes-jar</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <classifier>themes</classifier>-->
+<!--                            <includes>-->
+<!--                                <include>themes/theme/**</include>-->
+<!--                                <include>themes/META-INF/**</include>-->
+<!--                            </includes>-->
+<!--                            <outputDirectory>${project.build.directory}</outputDirectory>-->
+<!--                            <archive>-->
+<!--                                <manifest>-->
+<!--                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>-->
+<!--                                </manifest>-->
+<!--                                <forced>true</forced> &lt;!&ndash; Ensure the content is in the root of the JAR &ndash;&gt;-->
+<!--                                <fileSets>-->
+<!--                                    &lt;!&ndash; Place the META-INF folder at the root of the JAR &ndash;&gt;-->
+<!--                                    <fileSet>-->
+<!--                                        <directory>${project.basedir}/themes/META-INF</directory>-->
+<!--                                        <outputDirectory>META-INF</outputDirectory>-->
+<!--                                    </fileSet>-->
+<!--                                    &lt;!&ndash; Place the theme folder at the root of the JAR &ndash;&gt;-->
+<!--                                    <fileSet>-->
+<!--                                        <directory>${project.basedir}/themes/theme</directory>-->
+<!--                                        <outputDirectory>theme</outputDirectory>-->
+<!--                                    </fileSet>-->
+<!--                                </fileSets>-->
+<!--                            </archive>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+            <!-- Second execution: Use maven-assembly-plugin to package the META-INF and theme into whereq-themes.jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.1</version>
                 <executions>
                     <execution>
                         <id>themes-jar</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>single</goal>
                         </goals>
                         <configuration>
-                            <classifier>themes</classifier>
-                            <includes>
-                                <include>themes/**</include>
-                            </includes>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <finalName>whereq-themes</finalName>
+                            <archive>
+                                <manifest>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                </manifest>
+                            </archive>
+                            <descriptors>
+                                <descriptor>src/assembly/themes.xml</descriptor>
+                            </descriptors>
                         </configuration>
                     </execution>
                 </executions>

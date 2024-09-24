@@ -2,7 +2,7 @@
   "themes": [
     {
       "name": "key-to-marvel",
-      "types": ["login"]
+      "types": ["login", "welcome"]
     }
   ]
 }
